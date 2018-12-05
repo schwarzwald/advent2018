@@ -1,16 +1,12 @@
-module.exports = input => {
-  const letters = [...new Set([...input.toUpperCase()])];
-  const regex = new RegExp(letters.map(e => `${e.toLowerCase()}${e}|${e}${e.toLowerCase()}`).join('|'), 'g');
+module.exports = input =>
+  [...new Set([...input.toUpperCase()])].reduce((min, letter) =>
+    Math.min(min, [...input.replace(new RegExp(letter, 'ig'), '')]
+      .reduce((res, letter) => {
+        if (res[res.length - 1] && res[res.length - 1] !== letter && res[res.length - 1].toUpperCase() === letter.toUpperCase()) {
+          res.pop();
+        } else {
+          res.push(letter);
+        }
 
-  return letters.reduce((min, letter) => {
-    let replaced = input.replace(new RegExp(letter, 'ig'), '');
-    let length = replaced.length;
-
-    do {
-      length = replaced.length;
-      replaced = replaced.replace(regex, '');
-    } while (replaced.length != length);
-
-    return Math.min(length, min);
-  }, input.length);
-}
+        return res;
+      }, []).length), input.length);

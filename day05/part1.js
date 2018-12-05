@@ -1,14 +1,10 @@
-module.exports = input => {
-  const regex = new RegExp([...new Set([...input.toUpperCase()])]
-    .map(e => `${e.toLowerCase()}${e}|${e}${e.toLowerCase()}`).join('|'), 'g');
+module.exports = input =>
+  [...input].reduce((res, letter) => {
+    if (res[res.length - 1] && res[res.length - 1] !== letter && res[res.length - 1].toUpperCase() === letter.toUpperCase()) {
+      res.pop();
+    } else {
+      res.push(letter);
+    }
 
-  let replaced = input;
-  let length = input.length;
-
-  do {
-    length = replaced.length;
-    replaced = replaced.replace(regex, '');
-  } while (replaced.length != length);
-
-  return length;
-}
+    return res;
+  }, []).length;
