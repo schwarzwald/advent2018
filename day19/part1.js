@@ -37,7 +37,6 @@ module.exports = input => {
 
   while (ip >= 0 && ip < program.length) {
     registers[ipr] = ip;
-    console.log(registers)
     const args = program[ip];
 
     map.get(args[0])(args[1], args[2], args[3], registers);
