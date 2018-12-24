@@ -56,7 +56,6 @@ module.exports = input => {
 
       return f1 - f2;
     });
-    //queue.map(q => fScore.get(state(q)));
     let [x, y, g] = queue.shift();
     let st = state(x, y, g);
     open.delete(st);
